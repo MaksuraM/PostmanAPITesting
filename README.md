@@ -28,20 +28,19 @@ sh
 The report will be saved in a folder named newman.
 
 ## 📂 Project Structure
-bash
-    PostmanAPITesting/
-│── AutomateTC.postman_collection.json    # Postman collection file with all API tests
-│── README.md                             # This file
-│── newman/                               # Folder to store Newman run reports (optional)
 
-##📌 Dependencies
-Ensure Newman is installed globally for running collections from the command line.
+PostmanAPITesting/
+│── AutomateTC.postman_collection.json # Postman collection file with all API tests
+│── README.md # This file
+│── newman/ # Folder to store Newman run reports (optional)
 
-To install Newman, run:
-sh
- npm install -g newman
 
-## npm install -g newman
-sql
-   
-This structure should match the layout of your Postman API Testing repository and guide users through setup, running tests, and viewing reports. You can copy and paste this into your `README.md` file and push it to your GitHub repository!
+## 📌 Dependencies  
+Ensure **Newman** is installed globally for running collections from the command line.  
+
+To install Newman, run:  
+
+```sh
+npm install -g newman
+
+This version fixes formatting issues, corrects the command syntax, and removes unnecessary parts. You can now **copy and paste this into your `README.md` file** and push the updated version to GitHub. 🚀
