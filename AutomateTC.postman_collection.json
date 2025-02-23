@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "2b739865-625e-4639-9222-e9018bbc922a",
+		"name": "AutomateTC",
+		"description": "This collection automates some instances that use GET, POST, PUT, PATCH, DELETE Method",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42559963"
+	},
+	"item": [
+		{
+			"name": "GET_Method",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Starting API request for user data...\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ensure first user has a 'name' property\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.length(10);\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"name\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "This test fetches data using GET method then verify status code and checks if certain parameter is present in the response."
+			},
+			"response": []
+		},
+		{
+			"name": "POST Method",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Define the request payload before sending it\r",
+							"pm.variables.set(\"title\", \"Cypress API Test\");\r",
+							"pm.variables.set(\"body\", \"This is a test post\");\r",
+							"pm.variables.set(\"userId\", 1);\r",
+							"\r",
+							"// Log the request payload\r",
+							"console.log(\"Preparing to send user data:\", {\r",
+							"    title: pm.variables.get(\"title\"),\r",
+							"    body: pm.variables.get(\"body\"),\r",
+							"    userId: pm.variables.get(\"userId\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate the response status is 201\r",
+							"pm.test(\"Validate response status is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Parse response JSON\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Ensure response contains an ID\r",
+							"pm.test(\"Ensure response contains an ID\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData.id).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"// Log response for debugging\r",
+							"console.log(\"Received Response:\", jsonData);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				},
+				"description": "This test creates data using POST method then verify status code and checks if certain parameter is present in the response."
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Method",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Define the updated title for PATCH request\r",
+							"pm.variables.set(\"updatedTitle\", \"Updated Cypress API Test\");\r",
+							"\r",
+							"// Log the data that will be sent in the PATCH request\r",
+							"console.log(\"Preparing to update user data with new title:\", pm.variables.get(\"updatedTitle\"));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate the response status is 200 (for a successful PATCH)\r",
+							"pm.test(\"Validate PATCH response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Parse the response body\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Ensure the response contains the updated data\r",
+							"pm.test(\"Ensure PATCH response contains the updated title\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"title\", \"Updated Cypress API Test\");\r",
+							"});\r",
+							"\r",
+							"// Log the response for debugging\r",
+							"console.log(\"Updated Response:\", jsonData);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"{{updatedTitle}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				},
+				"description": "This test partially updates data using PATCH method then verify status code and checks if certain parameter is present in the response."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Method",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Set a dynamic postId for DELETE request (for example, you may want to delete a specific post)\r",
+							"pm.variables.set(\"postIdToDelete\", 1);  // Set a post ID to delete dynamically\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate DELETE response status handling both numeric and string status codes\r",
+							"pm.test(\"Validate DELETE response status is 200 or 204\", function () {\r",
+							"    const status = pm.response.status;\r",
+							"    const statusText = pm.response.statusText;\r",
+							"\r",
+							"    // Check if the response status is either 200, 204, or \"OK\"\r",
+							"    pm.expect([200, 204, \"OK\"]).to.include(status);  // Allow 'OK' as valid status too\r",
+							"});\r",
+							"\r",
+							"// Ensure the response body is empty or null (for DELETE responses with no content)\r",
+							"pm.test(\"Ensure the response body is empty or null\", function () {\r",
+							"    const responseBody = pm.response.body;\r",
+							"\r",
+							"    // If the status is 204, the body should be null (no content)\r",
+							"    if (pm.response.status === 204) {\r",
+							"        pm.expect(responseBody).to.be.null;  // For 204, expect null body\r",
+							"    } \r",
+							"    // If status is 200, the body should be empty\r",
+							"    else if (pm.response.status === 200) {\r",
+							"        pm.expect(responseBody).to.be.empty;  // For 200, expect empty body\r",
+							"    } \r",
+							"    // If the body is undefined or null, that's also valid\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.oneOf([null, undefined]);  // Expect either null or undefined body\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Optional: Log response for debugging\r",
+							"console.log(\"DELETE Response:\", pm.response.body);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/{{postIdToDelete}}",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"{{postIdToDelete}}"
+					]
+				},
+				"description": "This test deletes data using DELETE method then verify status code and checks if certain parameter is present in the response."
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Method",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Set variables for dynamic test data\r",
+							"pm.variables.set(\"postId\", 1);\r",
+							"pm.variables.set(\"updatedTitle\", \"Completely Updated Cypress API Test\");\r",
+							"pm.variables.set(\"updatedBody\", \"This is the updated post body\");\r",
+							"pm.variables.set(\"userId\", 1);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate PUT response status\r",
+							"pm.test(\"Validate PUT response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Ensure the PUT response contains the updated data\r",
+							"pm.test(\"Ensure the PUT response contains the updated data\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(jsonData).to.have.property(\"title\", pm.variables.get(\"updatedTitle\"));\r",
+							"    pm.expect(jsonData).to.have.property(\"body\", pm.variables.get(\"updatedBody\"));\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\", pm.variables.get(\"userId\"));\r",
+							"});\r",
+							"\r",
+							"// Optional: Log response for debugging\r",
+							"console.log(\"PUT Response:\", pm.response.json());\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Completely Updated Cypress API Test\",\r\n  \"body\": \"This is the updated post body\",\r\n  \"userId\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
