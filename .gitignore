@@ -1,0 +1,9 @@
+*.exe 
+*.log 
+*.dll 
+*.pak 
+*.dat 
+*.bin 
+locales/ 
+resources/ 
+squirrel.exe 
